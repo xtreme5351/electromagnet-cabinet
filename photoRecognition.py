@@ -8,12 +8,12 @@ import os
 from os import path
 import time
 
-# testDataset = r"D:\Pranav\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\inputEncoding.pkl"
-testImage1 = r"D:\Pranav\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\inputs\0000.png"
-testImage2 = r"D:\Pranav\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\inputs\0002.jpeg"
-testImage3 = r"D:\Pranav\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\inputs\0003.jpeg"
-orgFile = r"D:\Pranav\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\verified\0001.png"
-pickledData = r"D:\Pranav\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\faceEncoding.pkl"
+# testDataset = r"D:\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\inputEncoding.pkl"
+testImage1 = r"D:\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\inputs\0000.png"
+testImage2 = r"D:\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\inputs\0002.jpeg"
+testImage3 = r"D:\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\inputs\0003.jpeg"
+orgFile = r"D:\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\verified\0001.png"
+pickledData = r"D:\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\faceEncoding.pkl"
 model = "cnn"
 
 class imageRecognition():
@@ -31,8 +31,8 @@ class imageRecognition():
    
   
     def recogniseFaces(self, orgEncoding, inpEncoding, boxes, photo):
-        names = ["pranav"]
-        name = 'pranav'
+        names = ["boi"]
+        name = 'boi'
         print(type(orgEncoding))
         print(type(inpEncoding))
         data = pickle.loads(open(orgEncoding, "rb").read())
