@@ -101,6 +101,8 @@ class imageRecognition():
     def __init__(self):
         # Potential parsing of arguments to be done within the command line but I just hard coded the values as this is a test script.
         # If you do this, then a lot of the input variables would have to be changed to args["whatever input name"]
+        # But I wouldn't really use this because its harder to keep accessing this from the command line.
+        # Instead, its easier just to hard code the values in or come up with another function that takes in values.
         #ag = argparse.ArgumentParser()
         #ag.add_argument("-s", "--dataset", required=True, help="dataset dir")
         #ag.add_argument("-d", "--model", type=str, default="cnn", help="name of the model")
