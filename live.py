@@ -10,17 +10,10 @@ import face_recognition
 from imutils import paths
 from imutils.video import VideoStream
 
-pickledData = r"D:\Pranav\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\faceEncoding.pkl"
+pickledData = r"D:\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\faceEncoding.pkl"
 model = "cnn"
 
 class liveRecognition():
-
-    def looped():
-        arr = [[]]
-        for i in range(256):
-            arr.append(0)
-        return arr
-
 
     def recognise(orgEncoding, inpEncoding, boxes, frame):
         names = ["boi"]
@@ -35,10 +28,9 @@ class liveRecognition():
 
         for i in range(len(data['encodings'])):
             print("=== Encoding no: ", i, " ===")
-            # print(data['encodings'][i])
             temp.append(data['encodings'][i])
 
-        print("=======")
+        print("RECOG =======")
         print(temp[1])
         results = face_recognition.compare_faces(temp, inpEncoding, tolerance=0.55)
 
@@ -65,24 +57,15 @@ class liveRecognition():
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         boxes = face_recognition.face_locations(rgb, model=mod)
         face = face_recognition.face_encodings(rgb, boxes)
-
-        # print("Returning encoding: ",face[0])
-        # return face[0], boxes, frame
         print("=== FACE ===: ", face)
-        print(len(face))
-        returned = []
-        if len(face) == 0:
+        print("FACE ARR LENGTH: ", len(face))
+        global returned
+        if not face:
             liveRecognition.recogStart()
-        else:
+        else: 
             returned = face[0]
 
         liveRecognition.recognise(pickledData, returned, boxes, frame)
-
-    def test(frame, model):
-        cv2.imshow("TEST", frame)
-        print("FRAME PASSED")
-        print(str(model))
-        print("MODEL PASSED")
 
 
     def recogStart():
@@ -90,10 +73,8 @@ class liveRecognition():
         frame = imutils.resize(frame, width=1020)
         liveRecognition.load(frame, model)
         cv2.imshow("Video", frame)
-        key = cv2.waitKey(1) & 0xFF
-
-        if key == ord("k"):
-            sys.exit()
+        time.sleep(2.0)
+        cv2.destroyWindow("Video")
 
 
     def __init__(self):
