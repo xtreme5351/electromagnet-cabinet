@@ -12,6 +12,7 @@ import time
 # This was just a test script for me to properly understand and test out how facial recognition works in python.
 # This was just a step to the finished project.
 # I stil included it because I thought it was cool :p
+# This code will not be updated anymore btw, it served its purpose
 # === END NOTE ===
 
 # paths to images to test accuracy and recognition
