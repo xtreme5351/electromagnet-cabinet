@@ -9,9 +9,10 @@ from os import path
 import face_recognition
 from imutils import paths
 from imutils.video import VideoStream
+from imutils.video import FPS
 
 pickledData = r"D:\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\faceEncoding.pkl"
-model = "cnn"
+model = "hog"
 
 class liveRecognition():
 
@@ -48,10 +49,12 @@ class liveRecognition():
             for ((top, right, bottom, left), name) in zip(boxes, names):
                 cv2.rectangle(frame, (left, top), (right, bottom), (150, 150, 0), 2)
                 cv2.putText(frame, name, (left, top), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 1)
+        else:
+            pass
+
 
 
     def load(frame, mod):
-
         print("Encoding frame")
 
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -61,20 +64,37 @@ class liveRecognition():
         print("FACE ARR LENGTH: ", len(face))
         global returned
         if not face:
-            liveRecognition.recogStart()
+            liveRecognition.recogStart(1)
         else: 
             returned = face[0]
 
         liveRecognition.recognise(pickledData, returned, boxes, frame)
+       
 
 
-    def recogStart():
-        frame = video.read()
-        frame = imutils.resize(frame, width=1020)
-        liveRecognition.load(frame, model)
-        cv2.imshow("Video", frame)
-        time.sleep(2.0)
-        cv2.destroyWindow("Video")
+    def recogStart(a):
+        while True:
+            frame = video.read()
+            if a == 0:
+                frame = imutils.resize(frame, width=1020)
+                liveRecognition.load(frame, model)
+                cv2.imshow("Video", frame)
+                key = cv2.waitKey(1) & 0xFF
+                if key == ord("k"):
+                    break
+
+                time.sleep(2.0)
+                # cv2.destroyWindow("Video")
+
+            elif a == 1:
+                liveRecognition.load(frame, model)
+                cv2.imshow("Video", frame)
+                key = cv2.waitKey(1) & 0xFF
+                if key == ord("k"):
+                    break
+
+                time.sleep(2.0)
+
 
 
     def __init__(self):
@@ -86,7 +106,6 @@ class liveRecognition():
             raise IOError("CANNOT START VIDEO")
 
         time.sleep(1.0)
-        while True:
-            liveRecognition.recogStart()
+        liveRecognition.recogStart(0)
 
 liveRecognition()
