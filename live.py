@@ -12,7 +12,7 @@ from imutils.video import VideoStream
 from imutils.video import FPS
 
 # path to pickled data created from the other script encodingCreator.py
-pickledData = r"D:\Pranav\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\faceEncoding.pkl"
+pickledData = r"ENTER PATH TO PICKLED DATA"
 model = "hog"
 version = "1.0.1"
 
