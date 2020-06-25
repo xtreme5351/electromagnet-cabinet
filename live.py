@@ -11,11 +11,13 @@ from imutils import paths
 from imutils.video import VideoStream
 from imutils.video import FPS
 
-pickledData = r"D:\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\faceEncoding.pkl"
+# path to pickled data created from the other script encodingCreator.py
+pickledData = r"D:\Pranav\PycharmProjects\python\machineLearning\ElectromagnetCabinet\dataset\faceEncoding.pkl"
 model = "hog"
-version = "1.0.0"
+version = "1.0.1"
 
 class liveRecognition():
+    # the main function that applies the face boxes and puts a name to a face
     def recognise(orgEncoding, inpEncoding, boxes, frame):
         names = ["boi"]
         name = 'boi'
@@ -59,25 +61,29 @@ class liveRecognition():
             liveRecognition.stasis("f", 0)
 
 
-
+    # function that doesnt really do that much apart from a bunch of print statements
     def stasis(state, t):
         print("===", state, "===")
+        # rf = recognised face
         if state == "rf":
             print("Face recognised, continuing")
-
+        # f = face detected
         elif state == "f":
             print("Face detected, still continuing")
-
+        # nrf = no recognised face
         elif state == "nrf":
+            # starting a time elapsed function that counts how long it it has been until a face is detected.
             t2 = time.perf_counter()
             print("No face detected, beginning stasis")
             elapsed = t - t2
             print("{} seconds since last face detected".format(round(elapsed, 4)))
+            # calls the video function as a different state 
             liveRecognition.recogStart(1)
             
         
-
+    # function that loads a face into an encoding and decides whether a face exists in the frame. 
     def load(frame, mod, t):
+        # produces a 2d array of face vectors
         print("Encoding frame")
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         boxes = face_recognition.face_locations(rgb, model=mod)
@@ -108,18 +114,22 @@ class liveRecognition():
 
 
     def recogStart(a):
+        # loops until the exit conditions have been meet.
         while True:
             print("\nCONFIRMED FACES = ", detected)
             print("FAILED FACES = ", failed)
 
+            # breaks if the number of frames detected in a row, with a verified face is over 5.
             if detected > 5:
                 return True
                 break
-            
+
+            # if the code goes into statis more than twice, it exits.
             if totalSuspension > 1:
                 return False
                 break
-            
+
+            # state 0 is where no timer is started, hence 0 is passed into the function
             frame = video.read()
             if a == 0:
                 frame = imutils.resize(frame, width=1020)
@@ -128,7 +138,8 @@ class liveRecognition():
                 key = cv2.waitKey(1) & 0xFF
                 if key == ord("k"):
                     break
-
+            # state 1 is where the timer is started and t1 is passed into the function
+            # this is a redundant step but its cool to see how long the execution time of the functions (apart from the last) are.
             elif a == 1:
                 t1 = time.perf_counter()
                 frame = imutils.resize(frame, width=1020)
@@ -140,6 +151,7 @@ class liveRecognition():
 
 
     def main(self):
+        # the next few lines are sinful. pls forgive me but i didnt find a way around this.
         global failed
         failed = 1
 
@@ -153,16 +165,14 @@ class liveRecognition():
         global video
         video = VideoStream().start()
 
+        # just checks if a camera is connected properly and can be accessed. 
         if video is None:
             raise IOError("CANNOT START VIDEO")
 
         time.sleep(1.0)
         result = liveRecognition.recogStart(0)
-
+        # the overall class return into the other script, telling the script if the validation was a success
         if result == True:
             return True
         elif result == False:
             return False
-
-res = liveRecognition().main()
-print(res)
