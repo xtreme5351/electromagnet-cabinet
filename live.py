@@ -14,7 +14,7 @@ from imutils.video import FPS
 # path to pickled data created from the other script encodingCreator.py
 pickledData = r"ENTER PATH TO PICKLED DATA"
 model = "hog"
-version = "1.0.1"
+version = "1.1.1"
 
 class liveRecognition():
     # the main function that applies the face boxes and puts a name to a face
@@ -120,6 +120,7 @@ class liveRecognition():
             print("FAILED FACES = ", failed)
 
             # breaks if the number of frames detected in a row, with a verified face is over 5.
+            # change this number to something smaller to make the code run faster.
             if detected > 5:
                 return True
                 break
