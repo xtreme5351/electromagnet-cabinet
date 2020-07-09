@@ -58,22 +58,34 @@ def main():
     if len(failedAttempts) < 10:
         print("=== Starting ===")
         print("Failed attempts = ",len(failedAttempts))
+        # for the raspberry pi:
+        # temp = os.popen("vcgencmd measure_temp").readline()
+        # print("CPU TEMP = ", temp)
         GPIO.output(relayPin, GPIO.HIGH)
         id, text = reader.read()
         print("ID: " + str(id))
         print("Text: " + str(text))
+        if id is not None:
+            print("Please present your face ;)")
+            a = ai.main()
+            print("== THE RESULT OF THE FACE RECOG IS: ", a, " ===")
+            print("Master authorisation approved: SUCCESS")
+        else:
+            a = false
         
-        # Checks to see if the rfid tag is the same as the known tag of the master key.
+        # Checks to see if the rfid tag is the same as the known tag of the master key. Change this to whatever the master key number is.
+        # The codes can be retrieved from the Write.py script
         # If so, turns off the magnet for 30 secs
-        if id == 758755130931:
+        if id == 758755130931 and a:
             print("Master authorisation approved: SUCCESS")
             release()
             time.sleep(30)
             lock(0)
             
-        # Checks to see if the rfid tag is the same as the known tag of the regular key.
+        # Checks to see if the rfid tag is the same as the known tag of the regular key. Change this to whatever the regular key number is.
+        # The codes can be retrieved from the Write.py script
         # If so, turns off the magnet for 10 secs
-        elif id == 922657274647:
+        elif id == 922657274647 and a:
             print("Authorisation approved: SUCCESS")
             release()
             time.sleep(10)
